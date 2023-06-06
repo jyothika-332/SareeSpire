@@ -1,0 +1,56 @@
+{% extends "adminlogin/adbase.html" %}
+{% load static %}
+{% block title %}moonbeauty{% endblock  %}
+{% block body %}
+
+<div class="b">
+    <a href="{%url 'adminproduct'%}"><button class="btn btn-outline-light btn-lg px-5 mt-3 mx-3 text-dark" >Back</button></a></div>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="usercreat border border-radius-3 card col-5 p-5 text-white">
+            <h2 class="text-center text-dark">Edit Product</h2>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="text-center text-danger pt-3">
+                <strong>{{message}}</strong>
+            </div>
+            {% endfor %}
+            {%endif%}
+
+            <form method='POST' enctype="multipart/form-data">
+                {% csrf_token%}
+                <div class="mb-3">
+                    <div class="mb-2">
+                        <label  class="form-label text-dark">Product Name : </label>
+                        <input type="text" name="product_name" id="" class="form-control bg-transparent text-dark" value="{{prd.product_name}}" >
+                    </div>
+                    <div class="mb-2">
+                        <label  class="form-label text-dark">Description : </label>
+                        <input type="text" name="description" id="" class="form-control bg-transparent text-dark" value="{{prd.description}}">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label text-dark">Categories : </label>
+                        <input type="text" name="categories" id="" class="form-control bg-transparent text-dark" value="{{prd.categories}}">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label text-dark">Image : </label>
+                        <input type="file" accept="image/png, image/jpeg, image/jpg " name="image" id="" class="form-control bg-transparent text-dark" value="{{prd.image}}">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-labe text-dark">Stock : </label>
+                        <input type="number" name="stock" id="" class="form-control bg-transparent text-dark" value="{{prd.stock}}">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-labe text-dark">Price : </label>
+                        <input type="number" name="price" id="" class="form-control bg-transparent text-dark" value="{{prd.price}}">
+                    </div>    
+                <div class="d-grid mt-2">
+                    <button class="btn btn-success btn-lg" type="submit">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %} 

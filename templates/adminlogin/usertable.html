@@ -1,0 +1,247 @@
+{% extends "adminlogin/adbase.html" %}
+{% load static %}
+{% block title %}moonbeauty{% endblock  %}
+{% block body %}
+
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+
+  <ul class="sidebar-nav" id="sidebar-nav">
+
+    <li class="nav-item">
+      <a class="nav-link " href="{% url 'dashboard' %}">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'adminproduct' %}">
+            <i class="bi bi-circle"></i><span>All Product</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'addproduct' %}">
+            <i class="bi bi-circle"></i><span>Add Product</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'adminproduct' %}">
+            <i class="bi bi-circle"></i><span>Edit Product</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'adminproduct' %}">
+            <i class="bi bi-circle"></i><span>Delete Product</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End product Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-journal-text"></i><span>Order</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="forms-elements.html">
+            <i class="bi bi-circle"></i><span>Form Elements</span>
+          </a>
+        </li>
+        <li>
+          <a href="forms-layouts.html">
+            <i class="bi bi-circle"></i><span>Form Layouts</span>
+          </a>
+        </li>
+        <li>
+          <a href="forms-editors.html">
+            <i class="bi bi-circle"></i><span>Form Editors</span>
+          </a>
+        </li>
+        <li>
+          <a href="forms-validation.html">
+            <i class="bi bi-circle"></i><span>Form Validation</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End order Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="">
+        <i class="bi bi-layout-text-window-reverse"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'usertable' %}">
+            <i class="bi bi-circle"></i><span>Users List</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End user Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-bar-chart"></i><span>Category</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'admincategory' %}">
+            <i class="bi bi-circle"></i><span> All Category</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'addcategory' %}">
+            <i class="bi bi-circle"></i><span>Add Category</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'admincategory' %}">
+            <i class="bi bi-circle"></i><span>Edit Category</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'admincategory' %}">
+            <i class="bi bi-circle"></i><span>Delete Category</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End category Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-gem"></i><span>Brand</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'adminbrand' %}">
+            <i class="bi bi-circle"></i><span> All Brand</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'addbrand' %}">
+            <i class="bi bi-circle"></i><span>Add Brand</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'adminbrand' %}">
+            <i class="bi bi-circle"></i><span>Edit Brand</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'adminbrand' %}">
+            <i class="bi bi-circle"></i><span>Delete Brand</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End brand Nav -->
+
+    <li class="nav-heading">Pages</li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="users-profile.html">
+        <i class="bi bi-person"></i>
+        <span>Profile</span>
+      </a>
+    </li><!-- End Profile Page Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="pages-faq.html">
+        <i class="bi bi-question-circle"></i>
+        <span>F.A.Q</span>
+      </a>
+    </li><!-- End F.A.Q Page Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="pages-contact.html">
+        <i class="bi bi-envelope"></i>
+        <span>Contact</span>
+      </a>
+    </li><!-- End Contact Page Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="pages-register.html">
+        <i class="bi bi-card-list"></i>
+        <span>Register</span>
+      </a>
+    </li><!-- End Register Page Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="pages-login.html">
+        <i class="bi bi-box-arrow-in-right"></i>
+        <span>Login</span>
+      </a>
+    </li><!-- End Login Page Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="pages-error-404.html">
+        <i class="bi bi-dash-circle"></i>
+        <span>Error 404</span>
+      </a>
+    </li><!-- End Error 404 Page Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="pages-blank.html">
+        <i class="bi bi-file-earmark"></i>
+        <span>Blank</span>
+      </a>
+    </li><!-- End Blank Page Nav -->
+
+  </ul>
+
+</aside><!-- End Sidebar-->
+
+
+<main id="main" class="main">
+<div class="card-body">
+    
+    <!-- Table with stripped rows -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Address</th>
+          <th scope="col">Status</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in members%}
+        <tr>
+          <th scope="row">{{i.id}}</th>
+          <td>{{i.first_name}}</td>
+          <td>{{i.last_name}}</td>
+          <td>{{i.username}}</td>
+          <td>{{i.email}}</td>
+          <td></td>
+          {% if i.is_active %}
+          <td>Active</td>
+          {% else %}
+          <td>Blocked</td>
+          {% endif %}
+          {% if i.is_active %}
+          <td><a href="{% url 'block_user' i.id %}"><button class="btn btn-success">Block</button></a></td>
+          {% else %}
+          <td><a href="{% url 'block_user' i.id %}"><button class="btn btn-danger">Unblock</button></a></td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+       
+      </tbody>
+    </table>
+    <!-- End Table with stripped rows -->
+
+  </div>
+
+</main><!-- End #main -->
+
+{% endblock %}  

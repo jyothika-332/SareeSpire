@@ -1,0 +1,42 @@
+{% extends "adminlogin/adbase.html" %}
+{% load static %}
+{% block title %}moonbeauty{% endblock  %}
+{% block body %}
+
+<div class="b pt-3 px-3">
+    <a href="{%url 'adminproduct'%}"><button class="btn btn-outline-light btn-lg px-5" >Back</button></a></div>
+<div class="container ">
+    <div class="row justify-content-center mt-5">
+        <div class="usercreat border border-radius-3 card col-5 p-4 text-white">
+            <h2 class="text-center text-dark">Add Category</h2>
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="text-center text-danger pt-3">
+                <strong>{{message}}</strong>
+            </div>
+            {% endfor %}
+            {%endif%}
+
+            <form action="{% url 'addcategory' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-2">
+                    <label for="" class="form-label text-dark">Category Name : </label>
+                    <input type="text" name="category_name" id="" class="form-control bg-transparent text-dark" >
+                </div>
+                <div class="mb-2">
+                    <label for="" class="form-label text-dark">Description : </label>
+                    <input type="text" name="description" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="mb-2">
+                    <label for="" class="form-label text-dark">Image : </label>
+                    <input type="file" accept="image/png, image/jpeg, image/jpg " name="image" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-success btn-lg"  type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

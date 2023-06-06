@@ -1,0 +1,50 @@
+{% extends "homepage/base.html" %}
+{% load static %}
+{% block title %}moonbeauty{% endblock  %}
+{% block body %}
+
+<div class="b pt-3 px-3">
+    <a href="{%url 'userprofile' %}"><button class="btn btn-outline-light btn-lg px-5" >Back</button></a></div>
+<div class="container ">
+    <div class="row justify-content-center mt-5">
+        <div class="usercreat border border-radius-3 card col-5 p-4 text-white">
+            <h2 class="text-center text-dark">Add Address</h2>
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="text-center text-danger pt-3">
+                <strong>{{message}}</strong>
+            </div>
+            {% endfor %}
+            {%endif%}
+
+            <form action="{% url 'addaddress' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-2">
+                    <label for="" class="form-label text-dark">House Name : </label>
+                    <input type="text" name="house_name" id="" class="form-control bg-transparent text-dark" >
+                </div>
+                <div class="mb-2">
+                    <label for="" class="form-label text-dark">City : </label>
+                    <input type="text" name="city" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="mb-2">
+                    <label for="" class="form-label text-dark">State : </label>
+                    <input type="text" name="state" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="mb-2">
+                    <label for="" class="form-label text-dark">Country : </label>
+                    <input type="text" name="country" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="mb-2">
+                    <label for="" class="form-label text-dark">Pincode : </label>
+                    <input type="number" name="pincode" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

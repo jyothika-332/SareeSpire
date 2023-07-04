@@ -3,6 +3,21 @@
 {% block title %}SareeSpire{% endblock  %}
 {% block body %}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+     <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'userside/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'userside/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+    
     <!-- Navbar Start -->
     <div class="container-fluid mb-5">
         <div class="row border-top px-xl-5">
@@ -32,22 +47,43 @@
                         </div>
                     </div>
                 </nav>
-                {% for i in ads %}
                 <div id="header-carousel" class="carousel slide" data-ride="carousel">
+
                     <div class="carousel-inner">
-                        <div class="carousel-item active" style="height: 800px">
+                        <div class="carousel-item active" style="height: 700px;">
+                            <img class="img-fluid" src="{% static 'userside/img/add4.jpg' %}" alt="Image" style="height: 1000px">
+                            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                                <div class="p-3" style="max-width: 700px;">
+                                    <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
+                                    <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
+                                    <a href="{% url 'product' %}" class="btn btn-light py-2 px-3">Shop Now</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% for i in ads %}
+                        <div class="carousel-item" style="height: 700px;">
                             <img class="img-fluid" src="{{ i.image.url }}" alt="Image" style="height: 1000px">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
                                     <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
                                     <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
-                                    <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                                    <a href="{% url 'product' %}" class="btn btn-light py-2 px-3">Shop Now</a>
                                 </div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
+                    <a class="carousel-control-prev" href="#header-carousel" data-slide="prev">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-prev-icon mb-n2"></span>
+                        </div>
+                    </a>
+                    <a class="carousel-control-next" href="#header-carousel" data-slide="next">
+                        <div class="btn btn-dark" style="width: 45px; height: 45px;">
+                            <span class="carousel-control-next-icon mb-n2"></span>
+                        </div>
+                    </a>
                 </div>
-                {% endfor %}
             </div>
         </div>
     </div>
@@ -151,6 +187,24 @@
         </div>
     </div>
     <!-- Subscribe End -->
+  
+    
+     <!-- JavaScript Libraries -->
+ <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+ <script src="{% static 'userside/lib/easing/easing.min.js' %}"></script>
+ <script src="{% static 'userside/lib/owlcarousel/owl.carousel.min.js' %}"></script>
 
+ <!-- Contact Javascript File -->
+ <script src="{% static 'userside/mail/jqBootstrapValidation.min.js' %}"></script>
+ <script src="{% static 'userside/mail/contact.js' %}"></script>
+
+ <!-- Template Javascript -->
+ <script src="{% static 'userside/js/main.js' %}"></script>
+</body>
+
+
+
+</html>
     
 {% endblock  %}

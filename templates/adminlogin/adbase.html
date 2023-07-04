@@ -279,7 +279,35 @@
             <span>Dashboard</span>
           </a>
         </li><!-- End Dashboard Nav -->
-  
+        
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#ads-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-menu-button-wide"></i><span>Ads</span><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul id="ads-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+              <a href="{% url 'admin_ads' %}">
+                <i class="bi bi-circle"></i><span>All Ads</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'admin_ads' %}">
+                <i class="bi bi-circle"></i><span>Add Ads</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'add_ads' %}">
+                <i class="bi bi-circle"></i><span>Edit Ads</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'admin_ads' %}">
+                <i class="bi bi-circle"></i><span>Delete Ads</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
             <i class="bi bi-menu-button-wide"></i><span>Product</span><i class="bi bi-chevron-down ms-auto"></i>

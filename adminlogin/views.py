@@ -127,7 +127,7 @@ def editproduct(request,prod_id):
         if prod_name == '' or description == '' or categories == '' or price == '' or offer == '' or image == '':
             messages.error(request, "Fields can't be blank")
             return redirect('editproduct', prod_id)
-        print(brand,"gggggggggggggggggggg")
+        
         brnd = Brand.objects.get(brand_name = brand)
         cat = Categories.objects.get(product_name = categories)   
         offr = Offer.objects.get(name = offer)

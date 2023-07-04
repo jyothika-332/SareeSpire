@@ -1,6 +1,6 @@
 {% extends "adminlogin/adbase.html" %}
 {% load static %}
-{% block title %}moonbeauty{% endblock  %}
+{% block title %}SareeSpire{% endblock  %}
 {% block body %}
 
 <div class="b">
@@ -9,6 +9,7 @@
     <div class="row justify-content-center mt-5">
         <div class="usercreat border border-radius-3 card col-5 p-5 text-white">
             <h2 class="text-center text-dark">Edit Product</h2>
+            
             {% if messages %}
             {% for message in messages %}
             <div class="text-center text-danger pt-3">
@@ -29,20 +30,37 @@
                         <input type="text" name="description" id="" class="form-control bg-transparent text-dark" value="{{prd.description}}">
                     </div>
                     <div class="mb-2">
+                        <label class="form-label text-dark">Brand : </label>
+                        <select name="brand" id="" class="form-control">
+                            {% for brand in brand  %}
+                                <option value="{{ brand.id }}">{{ brand.brand_name }}</option>
+                            {% endfor %}
+                        </select>                    
+                    </div>
+                    <div class="mb-2">
                         <label class="form-label text-dark">Categories : </label>
-                        <input type="text" name="categories" id="" class="form-control bg-transparent text-dark" value="{{prd.categories}}">
+                        <select name="categories" id="" class="form-control">
+                            {% for cat in cat  %}
+                                <option value="{{ cat.id }}">{{ cat.product_name }}</option>
+                            {% endfor %}
+                        </select>                    
+                    </div>
                     </div>
                     <div class="mb-2">
                         <label class="form-label text-dark">Image : </label>
                         <input type="file" accept="image/png, image/jpeg, image/jpg " name="image" id="" class="form-control bg-transparent text-dark" value="{{prd.image}}">
                     </div>
                     <div class="mb-2">
-                        <label class="form-labe text-dark">Stock : </label>
-                        <input type="number" name="stock" id="" class="form-control bg-transparent text-dark" value="{{prd.stock}}">
-                    </div>
-                    <div class="mb-2">
                         <label class="form-labe text-dark">Price : </label>
                         <input type="number" name="price" id="" class="form-control bg-transparent text-dark" value="{{prd.price}}">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label text-dark">Offer : </label>
+                        <select name="categories" id="" class="form-control">
+                            {% for offer in offer  %}
+                                <option value="{{ offer.id }}">{{ offer.name }}</option>
+                            {% endfor %}
+                        </select>
                     </div>    
                 <div class="d-grid mt-2">
                     <button class="btn btn-success btn-lg" type="submit">Update</button>

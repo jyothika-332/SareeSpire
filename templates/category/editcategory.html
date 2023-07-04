@@ -1,7 +1,9 @@
 {% extends "adminlogin/adbase.html" %}
 {% load static %}
-{% block title %}moonbeauty{% endblock  %}
+{% block title %}SareeSpire{% endblock  %}
 {% block body %}
+
+
 
 <div class="b">
     <a href="{%url 'admincategory'%}"><button class="btn btn-outline-light btn-lg px-5 mt-3 mx-3 text-dark" >Back</button></a></div>
@@ -9,6 +11,7 @@
     <div class="row justify-content-center mt-5">
         <div class="usercreat border border-radius-3 card col-5 p-5 text-white">
             <h2 class="text-center text-dark">Edit Category</h2>
+            
             {% if messages %}
             {% for message in messages %}
             <div class="text-center text-danger pt-3">

@@ -38,6 +38,15 @@ class Brand(models.Model):
             self.slug = slugify(self.brand_name)
         super(Brand, self).save(*args, **kwargs)
 
+class Offer(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    discount = models.BigIntegerField()
+    start_date = models.DateField()
+    end_date = models.DateField()
+
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     slug = models.CharField(max_length=150, null=False ,blank=False)
     product_name = models.CharField(blank=False,max_length=50)
@@ -46,6 +55,11 @@ class Product(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE )
     image = models.FileField(blank=True,upload_to='photos/products')
     price = models.IntegerField(blank=False,null=True)
+    offer = models.ForeignKey(Offer, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def get_offer_price(self):
+        amount = self.price - (self.price * self.offer.discount /100)
+        return amount
 
     def get_url(self):
         return reverse('product_details', args=[self.categories.slug,self.slug])
@@ -62,6 +76,7 @@ class Product(models.Model):
 
 class ColorVariation(models.Model):
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
+    description = models.CharField(max_length=250)
     color = models.CharField(max_length=30)
     quantity = models.IntegerField()
     image = models.ImageField(null=True, blank=True)

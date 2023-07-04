@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'brand',
     'cart',
     'userprofile',
+    'checkout',
+    'mathfilters',
+    'wishlist',
+    'order',
 ]
 
 MIDDLEWARE = [
@@ -124,6 +128,17 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+
+
+# email otp
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # or the appropriate port number
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'jyothikact10@gmail.com'  # Email credentials for sending OTPs
+EMAIL_HOST_PASSWORD = 'lpnwxmtjyfllzwac'
+
 
 
 # Static files (CSS, JavaScript, Images)

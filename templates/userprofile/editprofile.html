@@ -1,14 +1,15 @@
-{% extends "adminlogin/adbase.html" %}
+{% extends "homepage/base.html" %}
 {% load static %}
-{% block title %}moonbeauty{% endblock  %}
+{% block title %}SareeSpire{% endblock  %}
 {% block body %}
 
 <div class="b">
-    <a href="{%url 'adminproduct'%}"><button class="btn btn-outline-light btn-lg px-5 mt-3 mx-3 text-dark" >Back</button></a></div>
+    <a href="{% url 'userprofile' %}"><button class="btn btn-outline-light btn-lg px-5 mt-3 mx-3 text-dark" >Back</button></a></div>
 <div class="container">
     <div class="row justify-content-center mt-5">
         <div class="usercreat border border-radius-3 card col-5 p-5 text-white">
-            <h2 class="text-center text-dark">Edit Product</h2>
+            <h2 class="text-center text-dark">Edit Profile</h2>
+            
             {% if messages %}
             {% for message in messages %}
             <div class="text-center text-danger pt-3">
@@ -21,29 +22,21 @@
                 {% csrf_token%}
                 <div class="mb-3">
                     <div class="mb-2">
-                        <label  class="form-label text-dark">Product Name : </label>
-                        <input type="text" name="product_name" id="" class="form-control bg-transparent text-dark" value="{{prd.product_name}}" >
+                        <label  class="form-label text-dark">User Name : </label>
+                        <input type="text" name="user_name" id="" class="form-control bg-transparent text-dark" value="{{usr.username}}" >
                     </div>
                     <div class="mb-2">
-                        <label  class="form-label text-dark">Description : </label>
-                        <input type="text" name="description" id="" class="form-control bg-transparent text-dark" value="{{prd.description}}">
+                        <label  class="form-label text-dark">First Name : </label>
+                        <input type="text" name="first_name" id="" class="form-control bg-transparent text-dark" value="{{usr.first_name}}">
                     </div>
                     <div class="mb-2">
-                        <label class="form-label text-dark">Categories : </label>
-                        <input type="text" name="categories" id="" class="form-control bg-transparent text-dark" value="{{prd.categories}}">
+                        <label class="form-label text-dark">Last Name : </label>
+                        <input type="text" name="last_name" id="" class="form-control bg-transparent text-dark" value="{{usr.last_name}}">
                     </div>
                     <div class="mb-2">
-                        <label class="form-label text-dark">Image : </label>
-                        <input type="file" accept="image/png, image/jpeg, image/jpg " name="image" id="" class="form-control bg-transparent text-dark" value="{{prd.image}}">
+                        <label class="form-label text-dark">Email : </label>
+                        <input type="email" name="email" id="" class="form-control bg-transparent text-dark" value="{{usr.email}}">
                     </div>
-                    <div class="mb-2">
-                        <label class="form-labe text-dark">Stock : </label>
-                        <input type="number" name="stock" id="" class="form-control bg-transparent text-dark" value="{{prd.stock}}">
-                    </div>
-                    <div class="mb-2">
-                        <label class="form-labe text-dark">Price : </label>
-                        <input type="number" name="price" id="" class="form-control bg-transparent text-dark" value="{{prd.price}}">
-                    </div>    
                 <div class="d-grid mt-2">
                     <button class="btn btn-success btn-lg" type="submit">Update</button>
                 </div>

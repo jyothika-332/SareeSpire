@@ -1,35 +1,31 @@
 {% extends "homepage/base.html" %}
-{% block title %}moonbeauty{% endblock  %}
+{% block title %}SareeSpire{% endblock  %}
 {% block body %}
 
 <section class="vh-100">
     <div class="container py-5 h-100">
       <div class="row d-flex align-items-center justify-content-center h-100">
-        {% comment %} <div class="col-md-8 col-lg-7 col-xl-6">
-          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-            class="img-fluid" alt="Phone image">
-        </div> {% endcomment %}
         <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
           <form method = 'POST' >
             {% csrf_token %}
             <div class="form-outline ">
+
               {% if messages %}
-
               {% for message in messages %}
-
               <div class="text-center text-danger pt-3">
                   <strong>{{message}}</strong>
               </div>
               {% endfor %}
               {%endif%}
+              
               <h1>Log In</h1>
-              <input type="username" name="username" id="form1Example13" class="form-control form-control-lg" />
               <label class="form-label" for="form1Example13">User name</label>
+              <input type="username" name="username" id="form1Example13" class="form-control form-control-lg" />
             </div>
 
             <div class="form-outline mb-4">
-              <input type="password" name="password" id="form1Example23" class="form-control form-control-lg" />
               <label class="form-label" for="form1Example23">Password</label>
+              <input type="password" name="password" id="form1Example23" class="form-control form-control-lg" />
             </div>
   
             <div class="d-flex justify-content-around align-items-center mb-4">
@@ -38,17 +34,76 @@
                 <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
                 <label class="form-check-label" for="form1Example3"> Remember me </label>
               </div>
-              <a href="#!">Forgot password?</a>
+              <a href="{% url 'forgotpassword' %}">Forgot password?</a>
             </div>
   
             <!-- Submit button -->
-            <a href="{% url 'home' %}" ><button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button></a>
-           
+            {% if request.user.is_superuser %}
+              <a href="{% url 'adminloginpage' %}" ><button type="submit" class="btn btn-primary btn-lg btn-block mb-3">Sign in</button></a>
+            {% else %}
+              <a href="{% url 'home' %}" ><button type="submit" class="btn btn-primary btn-lg btn-block mb-3">Sign in</button></a>
           </form>
-          <a href="{% url 'signup' %}" ><button class="btn btn-primary btn-lg btn-block">Sign up</button></a>
+            <a href="{% url 'signup' %}" ><button class="btn btn-primary btn-lg btn-block">Sign up</button></a>
+          {% endif %}  
         </div>
       </div>
     </div>
   </section>
+
+
+
+  <form action="{% url 'forgotpassword' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="modal fade" id="shippingAddressModal" tabindex="-1" aria-labelledby="shippingAddressModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="shippingAddressModalLabel">Shipping Address</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label for="" class="form-label text-dark">House Name</label>
+                    <input type="text" name="house_name" id="" class="form-control bg-transparent text-dark" >
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="" class="form-label text-dark">City</label>
+                    <input type="text" name="city" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="" class="form-label text-dark">State</label>
+                    <input type="text" name="state" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="" class="form-label text-dark">Country</label>
+                    <input type="text" name="country" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="" class="form-label text-dark">Phone Number</label>
+                    <input type="number" name="phone" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="col-md-6 form-group">
+                    <label for="" class="form-label text-dark">Pincode</label>
+                    <input type="number" name="pincode" id="" class="form-control bg-transparent text-dark">
+                </div>
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form> 
+            </div>
+        </div>
+        </div>
+    </div>
+  
+
+<!-- Modal -->
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 
 {% endblock  %}

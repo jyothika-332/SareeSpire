@@ -25,7 +25,7 @@ def addbrand(request):
         except: 
             is_super = False
 
-        if brand_name.strip() == '' or description.strip() == '':
+        if brand_name.strip() == '' or description.strip() == '' or image == '':
             messages.error(request, "Fields can't be blank")
             return redirect('addbrand')   
         if Brand.objects.filter(brand_name=brand_name).exists():

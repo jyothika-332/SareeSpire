@@ -9,10 +9,10 @@ from django.contrib import messages
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login')
 def admincategory(request):
-    dictionary={
+    context={
         'cat': Categories.objects.all()
     }
-    return render(request,'category/admincategory.html',dictionary)
+    return render(request,'category/admincategory.html',context)
 
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -27,7 +27,7 @@ def addcategory(request):
         except: 
             is_super = False
 
-        if category_name.strip() == '' or description.strip() == '':
+        if category_name.strip() == '' or description.strip() == '' or image == '':
             messages.error(request, "Fields can't be blank")
             return redirect('addcategory')   
         if Categories.objects.filter(product_name=category_name).exists():
@@ -38,6 +38,7 @@ def addcategory(request):
         messages.success(request, 'Category Added successfully')
         return redirect('admincategory')
     return render(request,'category/addcategory.html') 
+
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login')

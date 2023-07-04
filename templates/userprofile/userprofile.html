@@ -1,11 +1,10 @@
 {% extends "homepage/base.html" %}
 {% load static %}
-{% block title %}moonbeauty{% endblock  %}
+{% block title %}SareeSpire{% endblock  %}
 {% block body %}
 
 
-{% comment %} <!DOCTYPE html>
-<html lang="en"> {% endcomment %}
+
 
 <head>
     <meta charset="UTF-8">
@@ -13,38 +12,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>moonbeauty</title>
     <link rel="stylesheet" href="{% static 'userside/css/user_profile.css' %}">
-    {% comment %} <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous"> {% endcomment %}
-
     </head>
 
 <body>
 
-    <!-- Navbar Start -->
-<div class="container-fluid">
+<!-- Navbar Start -->
+<div class="container-fluid mb-5">
     <div class="row border-top px-xl-5">
-        <div class="col-lg-9">
-            <nav class="navbar navbar-expand-lg bg-light navbar-light py-1 py-lg-0 px-0">
-                {% comment %} <a href="" class="text-decoration-none d-block d-lg-none">
-                    <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
-                </a>
+        <div class="col-lg-12">
+            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
                 <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
-                </button> {% endcomment %}
+                </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <div class="navbar-nav mr-auto py-0">
-                        <a href="{% url 'home' %}" class="nav-item nav-link">Home</a>
+                    <div class="navbar-nav mr-auto py-0 col-lg-6 col-6 text-right  ">
+                
+                        <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
                         <a href="{% url 'product' %}" class="nav-item nav-link">Shop</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu rounded-0 m-0">
-                                <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                <a href="checkout.html" class="dropdown-item">Checkout</a>
-                            </div>
-                        </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
-                        <a href="{% url 'signout' %}" class="nav-item nav-link">Logout</a>
+                    
+                    </div>
+                        <div class="navbar-nav mr-auto py-0 col-lg-6 col-6 text-right d-flex justify-content-end  ">
+                        <a href="" class="nav-item nav-link">Contact</a>
+                        
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'signout' %}" class="nav-item nav-link">Logout</a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
+                        {% endif %}
+                                                
                         <a href="{% url 'signup' %}" class="nav-item nav-link">Register</a>
+                    
                     </div>
                 </div>
             </nav>
@@ -73,7 +70,7 @@
                             {% if user.image %}
                             <img style="height: 150px; width: 150px;" src="{{ user.image.url }}" alt="Not available" />
                             {% else %}
-                            {% comment %} <img style="height: 150px; width: 150px;" src="{% static 'user/img/ProPic.png' %}" alt="Add Profile Image" /> {% endcomment %}
+                            <img style="height: 150px; width: 150px;" src="{% static 'userside/img/userprofile.jpg' %}" alt="Add Profile Image" />
                             {% endif %}
                         </div><br><br>
                         <div class="file btn btn-lg btn-primary" style="width: 150px;">
@@ -91,26 +88,25 @@
                         <h6>
                             <span style="color: rgb(165, 149, 149);">Username:@</span> {{ user.username }}
                         </h6>
+                        <label style="font-weight: bold;">Wallet : <span style="font-weight: bold;">{{ user.wallet }}</span></label>
                         <p class="proile-rating">RANKINGS : <span>8/10</span></p>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
                                     aria-controls="home" aria-selected="true">About</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                                    aria-controls="profile" aria-selected="false">Edit Info</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
                  <!-- Start Messages Area -->
+
      {% if messages %}
      <div class="alert alert-danger alert-dismissible fade show h-auto" role="alert" style="position: relative;">
          <button  type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
          {% for message in messages %}
              <strong>{{ message }}</strong><br>
          {% endfor %}
+
      </div>
      <script>
          let closeButton = document.querySelector('.alert button');
@@ -125,13 +121,14 @@
             </div>
             <div class="row"> 
                 <div class="col-md-4">
-                    <div class="profile-work">
-                        <p>PAGES</p>
-                        {% comment %} <a href="{% url 'wishlist' %}">Your Wishlist</a><br />
-                        <a href=" {% url 'cart' %}">Your Cart</a><br />
-                        <a href="{% url 'my_orders' %}">Your Orders</a><br /> {% endcomment %}
-                        <a href="">Track Orders</a>
-                    </div>
+                    <input type="radio" name="order" id="order-radio">
+                    <label for="order-radio"><a href="{% url 'mainorderpage' %}">My Orders</a></label><br>
+                    <input type="radio" name="address" id="address-radio">
+                    <label for="address-radio"><a href="{% url 'addaddress' %}">Add Address</a></label><br>
+                    <input type="radio" name="edit-profile" id="edit-profile-radio">
+                    <label for="edit-profile-radio"><a href="{% url 'editprofile' user.id %}">Edit Profile</a></label><br>
+                    <input type="radio" name="change-password" id="change-password-radio">
+                    <label for="change-password-radio"><a href="{% url 'changepassword' %}">Change Password</a></label>
                 </div>
                 <div class="col-md-8">
                     <div class="tab-content profile-tab" id="myTabContent">
@@ -139,16 +136,16 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>Username</label>
+                                    <label>Username :</label>
                                 </div>
                                 <div class="col-md-6">
                                     <p>{{user.username}}</p>
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>First Name</label>
+                                    <label>First Name :</label>
                                 </div>
                                 <div class="col-md-6">
                                     <p>{{user.first_name}}</p>
@@ -157,7 +154,7 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>Last Name</label>
+                                    <label>Last Name :</label>
                                 </div>
                                 <div class="col-md-6">
                                     <p>{{user.last_name}}</p>
@@ -166,21 +163,13 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>Email</label>
+                                    <label>Email :</label>
                                 </div>
                                 <div class="col-md-6">
                                     <p>{{user.email}}</p>
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Phone</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>{{user.phone}}</p>
-                                </div>
-                            </div><br>  
+                            </div><br>
+  
 
                             {% for address in addresses %}
                             {% if address.is_active %}
@@ -189,20 +178,15 @@
                                     <label>Address :</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>{{address.house}}, {{address.city}}, {{address.state}}, {{address.country}}, {{address.zip}}</p>
+                                    <p>{{address.housename}}, {{address.city}}, {{address.state}}, {{address.country}}, {{address.pincode}}</p><a href="{% url 'editaddress' address.id %}" ><button class="btn btn-primary mr-3">Edit Address</button></a>
+                                    <a href="{% url 'deleteaddress' address.id %}" ><button class="btn btn-primary mr-3">Delete Address</button></a>
                                 </div>
+                                
                             </div><br>
                             {% endif %}
-                            {% endfor %}
-                            <a href="{% url 'changepassword' %}">Change Password</a>
-                            <br>
-                            <div class="input-group-append">
-                                <a href="{% url 'addaddress' %}" ><button class="btn btn-primary mr-3">Add Address</button></a>
-                                <a href="{% url 'addaddress' %}" ><button class="btn btn-primary">Edit</button></a>
-                            </div>
-
-                            
+                            {% endfor %}     
                         </div>
+                        
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="row">
@@ -240,14 +224,6 @@
                                         <input type="text" class="form-control" name="email" value="{{user.email}}">
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Phone</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="phone" value="{{user.phone}}">
-                                    </div>
-                                </div>
                                  
         </form>
 
@@ -263,10 +239,7 @@
                 <label>Address :</label>
             </div>
             <div class="col-md-6">
-
                 <a class="text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">  {{address.house}}, {{address.city}}, {{address.state}}, {{address.country}}, {{address.zip}}----</a>
-                {% comment %} <a class="text-danger text-decoration-none"  href="{% url 'delete_address' address.id %}">Remove</a> {% endcomment %}
-                {% comment %} <form action="{% url 'update_address' address.id %}" method='POST'> {% endcomment %}
                     {% csrf_token %}
                     <div class="modal" id="exampleModal1" tabindex="-1">
                         <div class="modal-dialog">
@@ -389,82 +362,6 @@
 
    
     <!-- Address1 End -->
-
-    {% comment %} <!-- Address2 Start -->
-
-    <div class="row">
-        <div class="col-md-6">
-            <label>Address 2</label>
-        </div>
-        <div class="col-md-6">
-
-            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal2">Address2:{{user.address}}"</a>
-
-
-            <div class="modal" id="exampleModal2" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Address</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-
-                            <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="" name="house2" placeholder="House No"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'House No'">
-                            </div>
-
-                            <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="" name="city2" placeholder="City"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'City'">
-                            </div>
-
-                            <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="" name="state2" placeholder="State"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'State'">
-                            </div>
-
-                            <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="" name="zip2" placeholder="Zip Code"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Zip Code'">
-                            </div>
-
-                            <div class="col-md-12 form-group">
-                                <input type="text" class="form-control" id="" name="country2" placeholder="Country"
-                                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Country'">
-                            </div>
-
-
-                            <div class="col-md-12 form-group">
-                                <button type="submit" value="submit" data-bs-dismiss="modal" class="primary-btn">Change
-                                    Address</button>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-    </div>
-
-    <!-- Address2 End --> {% endcomment %}
-
-    <!-- Address Area End -->
-
-    {% comment %} <div class="row">
-        <div class="col-md-6">
-
-        </div>
-        <div class="col-md-2 m-3">
-            <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Save Edits" />
-        </div>
-    </div> {% endcomment %}
 
     </div>
     </div>

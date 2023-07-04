@@ -1,0 +1,46 @@
+{% extends "adminlogin/adbase.html" %}
+{% load static %}
+{% block title %}SareeSpire{% endblock  %}
+{% block body %}
+
+<div class="b pt-3 px-3">
+    <a href="{%url 'adminoffer'%}"><button class="btn btn-outline-light btn-lg px-5" >Back</button></a></div>
+<div class="container ">
+    <div class="row justify-content-center mt-5">
+        <div class="usercreat border border-radius-3 card col-5 p-4 text-white">
+            <h2 class="text-center text-dark">Add Offer</h2>
+
+            {% if messages %}
+            {% for message in messages %}
+            <div class="text-center text-danger pt-3">
+                <strong>{{message}}</strong>
+            </div>
+            {% endfor %}
+            {%endif%}
+
+            <form action="{% url 'addoffer' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-2">
+                    <label for="" class="form-label text-dark"> Offer : </label>
+                    <input type="text" name="offer" id="" class="form-control bg-transparent text-dark" >
+                </div>
+                <div class="mb-2">
+                    <label for="" class="form-label text-dark">Discount : </label>
+                    <input name="discount" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="mb-2">
+                    <label for="" class="form-label text-dark">Start Date : </label>
+                    <input type="date" name="start_date" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="mb-2">
+                    <label for="" class="form-label text-dark">End Date : </label>
+                    <input type="date" name="end_date" id="" class="form-control bg-transparent text-dark">
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-success btn-lg"  type="submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,417 @@
+{% extends "homepage/base.html" %}
+{% load static %}
+{% block title %}SareeSpire{% endblock  %}
+{% block body %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css"/>
+
+    <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+
+
+
+<body>
+    
+
+<!-- Navbar Start -->
+<div class="container-fluid mb-5">
+    <div class="row border-top px-xl-5">
+        <div class="col-lg-12">
+            <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav mr-auto py-0 col-lg-6 col-6 text-right  ">
+                
+                        <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
+                        <a href="{% url 'product' %}" class="nav-item nav-link">Shop</a>
+                    
+                    </div>
+                        <div class="navbar-nav mr-auto py-0 col-lg-6 col-6 text-right d-flex justify-content-end  ">
+                        <a href="" class="nav-item nav-link">Contact</a>
+                        
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'signout' %}" class="nav-item nav-link">Logout</a>
+                        {% else %}
+                            <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
+                        {% endif %}
+                                                
+                        <a href="{% url 'signup' %}" class="nav-item nav-link">Register</a>
+                    
+                    </div>
+                </div>
+            </nav>
+            {% for i in ads %}
+            <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active" style="height: 800px">
+                        <img class="img-fluid" src="{{ i.image.url }}" alt="Image" style="height: 1000px">
+                        <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                            <div class="p-3" style="max-width: 700px;">
+                                <h4 class="text-light text-uppercase font-weight-medium mb-3">10% Off Your First Order</h4>
+                                <h3 class="display-4 text-white font-weight-semi-bold mb-4">Fashionable Dress</h3>
+                                <a href="" class="btn btn-light py-2 px-3">Shop Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Navbar End -->
+
+<!-- Page Header Start -->
+<div class="container-fluid mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 30px">
+        <h3 class="font-weight-semi-bold text-primary mb-3 text-uppercase">Checkout</h3>
+    </div>
+</div>
+<!-- Page Header End -->
+
+    
+
+<!-- Checkout Start -->
+<form action="{% url 'placeorder' %}" method="post" enctype="multipart/form-data"> 
+    {% csrf_token %}
+
+    {% if messages %}
+    {% for message in messages %}
+        <div class="text-center text-danger pt-3">
+            <strong>{{message}}</strong>
+        </div>
+    {% endfor %}
+    {%endif%}
+
+    <div class="container-fluid pt-5">
+        <div class="row px-xl-5">
+            <div class="col-lg-3">
+                <div class="row px-xl-3"><h4 class="font-weight-semi-bold mb-4">Personal Details</h4></div>
+                    <div class="custom-control custom-radio mb-4 row px-xl-3 ">
+                        <label style="font-weight: bold;">First Name</label>
+                        <input type="text" required value="{{user.first_name}}" class="form-control mb-4" name="fname">
+                        <label style="font-weight: bold;">Last Name</label>
+                        <input type="text" required value="{{user.last_name}}" class="form-control mb-4" name="lname">
+                        <label style="font-weight: bold;">Email</label>
+                        <input type="text" required value="{{user.email}}" class="form-control" name="email">
+                    </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="mb-8">
+                    <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                       
+                            <input type="number" id="new_price" name="new_price" hidden>
+                            <input type="text" name="coupon_code2" id="coupon_code2" hidden>
+                        {% for address in addresses %}
+                            {% if address.is_active %}
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" value="{{ address.id }}" name="address" id="address{{ forloop.counter }}">
+                                <label class="custom-control-label" for="address{{ forloop.counter }}" style="font-weight: bold;">Address</label>
+                                <input class="form-control" type="text" id="" value="{{address.housename}}, {{address.city}}, {{address.state}}, {{address.country}}, {{address.pincode}}">
+                            </div>
+                            <br>
+                            <br>
+                            {% endif %}
+                        {% endfor %}
+                        </div>    
+                    </div>
+                </div>
+                <!-- Button to trigger the modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#shippingAddressModal">
+                    Add New Address
+                  </button>
+                </div>  
+            
+                
+                    
+            <div class="col-lg-4">
+                <div class="card border-secondary mb-3">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Order Total</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if cartitem %}
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>    
+                                <tbody>
+                                    {% for item in cartitem %}
+                                        <tr>
+                                            <td>{{ item.product.product_name }}</td>
+                                            {% if item.product.offer %}
+                                            <td>{{ item.product.get_offer_price }}</td>
+                                            {% else %}
+                                            <td>{{ item.product.price }}</td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% else %}
+                            <h4>Your Cart Is Empty</h4>
+                        {% endif %}
+                        <hr class="mt-0">
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Subtotal</h6>
+                            <h6 class="font-weight-medium"id="sub_total">{{total_price}}</h6>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Tax</h6>
+                            <h6 class="font-weight-medium"id="tax_field">{{tax}}</h6>
+                        </div>
+                        <div class="d-flex justify-content-between mb-3 pt-1">
+                            <h6 class="font-weight-medium">Shipping</h6>
+                            <h6 class="font-weight-medium">$10</h6>
+                        </div>
+                    
+                    </div>
+                    <div class="card-footer border-secondary bg-transparent">
+                        <div class="d-flex justify-content-between mt-2">
+                            <h5 class="font-weight-bold">Grand Total</h5>
+                            <h5 class="font-weight-bold"id="grand_total">{{grand_total}}</h5>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <p>Discount</p>
+                            <span id="coupon_discounts" style="color:black;" ></span> 
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <p>Total</p>
+                            <span style="color:black;" id="new_tot" ></span>                           
+                        </div>
+                    </div>
+                    <form class="mb-5" action="">
+                        <div class="input-group">
+                            <input hidden value="{{ grand_total }}" id="order_total">
+                            <input type="text" class="form-control p-4" placeholder="Coupon Code" id="coupon_code" >
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" id="apply_coupon">Apply Coupon</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+               
+                <div class="card border-secondary mb-5">
+                    <div class="card-header bg-secondary border-0">
+                        <h4 class="font-weight-semi-bold m-0">Payment</h4>
+                    </div>
+                    <input type="text" value="COD" name="payment" hidden>
+                    <div class="card-body">
+                        <div class="">
+                            <button class="btn btn-primary" style="width:50%;" type="submit" name="COD">Cash On Delivery</button>
+                            <button class="btn btn-primary payWithRazorpay"  type="button" name="PWR">Pay With Razorpay</button>    
+                        </div>
+                    </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Checkout End -->
+
+     
+      <form action="{% url 'checkout_add_address' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="modal fade" id="shippingAddressModal" tabindex="-1" aria-labelledby="shippingAddressModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="shippingAddressModalLabel">Shipping Address</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="" class="form-label text-dark">House Name</label>
+                        <input type="text" name="house_name" id="" class="form-control bg-transparent text-dark" >
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="" class="form-label text-dark">City</label>
+                        <input type="text" name="city" id="" class="form-control bg-transparent text-dark">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="" class="form-label text-dark">State</label>
+                        <input type="text" name="state" id="" class="form-control bg-transparent text-dark">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="" class="form-label text-dark">Country</label>
+                        <input type="text" name="country" id="" class="form-control bg-transparent text-dark">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="" class="form-label text-dark">Phone Number</label>
+                        <input type="number" name="phone" id="" class="form-control bg-transparent text-dark">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="" class="form-label text-dark">Pincode</label>
+                        <input type="number" name="pincode" id="" class="form-control bg-transparent text-dark">
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form> 
+                </div>
+            </div>
+            </div>
+        </div>
+      
+    </body>
+ <!-- Modal -->
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+<script>
+$(document).ready(function () {
+    $('.payWithRazorpay').click(function (e) {
+        e.preventDefault();
+    
+        var fname = $("[name='fname']").val();
+        var lname = $("[name='lname']").val();
+        var email = $("[name='email']").val();
+        var new_price = $("[name='new_price']").val();
+        var coupon_code2 = $("[name='coupon_code2']").val();
+        var token = $("[name='csrfmiddlewaretoken']").val()
+        var selectedAddress = $("input[name='address']:checked").val();
+        if(!selectedAddress)
+        {
+          swal("Alert!", "Address fields is mandatory!", "error");
+          console.log('All fields are empty');
+          return false;
+        }
+        else
+        {
+
+            $.ajax({
+                method: "GET",
+                url: "{% url 'proceed-to-pay'%}",
+                data: {
+                    "new_price": new_price,
+                    "coupon_code2": coupon_code2,
+                    csrfmiddlewaretoken: token
+                },
+                success: function(response){
+                    var options = {
+                        "key": "rzp_test_XdUkMswSbrHtXu",
+                        "amount": response.total_price * 100, 
+                        "currency": "INR",
+                        "name": "SareeSpire", 
+                        "description": "Thank you for buying from us",
+                        "image": "https://example.com/your_logo", 
+                        "handler": function (responseb){
+                            alert(responseb.razorpay_payment_id);
+                            data ={
+                                "fname": fname,
+                                "lname": lname,
+                                "email": email,
+                                "address" : selectedAddress,
+                                "payment":"Paid_by_Razorpay",
+                                "new_price": new_price,
+                                "coupon_code2": coupon_code2,
+                                "Payment_id": responseb.razorpay_payment_id,
+                                csrfmiddlewaretoken: token
+                            }
+                            $.ajax({
+                                method:"POST",
+                                url:"{%url 'placeorder'%}",
+                                data: data,
+                                success: function(responsec){
+                                    console.log(responsec.status)
+                                    swal("Congratulations!", responsec.status , "success").then((value) => {
+                                        window.location.href ='/mainorderpage'
+                                        
+                                      });
+                                }
+                            });    
+                        },
+                        "prefill": { 
+                            "name": fname+" "+lname, 
+                            "email": email,   
+                        },
+                        "theme": {
+                            "color": "#3399cc"
+                        }
+                    };
+                    var rzp1 = new Razorpay(options);
+                    rzp1.open();
+                    
+                }
+            });
+            
+        }
+    
+    }); 
+});      
+
+</script>
+
+
+
+<!-- Coupon Apply Start -->
+
+<script>
+    $(document).ready(function() {
+      $(document).on('click', '#apply_coupon', function(e) {
+        e.preventDefault();
+        var coupon_code = document.getElementById('coupon_code').value;
+        var order_total = document.getElementById('order_total').value;
+        console.log(coupon_code, order_total)
+    
+        $.ajax({
+          method: "POST",
+          url: "/apply_coupon/",
+
+          data: {
+            'coupon_code': coupon_code,
+            'order_total':order_total,
+            csrfmiddlewaretoken: '{{csrf_token}}'
+          },
+
+          success: function(response) {
+            console.log(response);
+            // alertify.error(response.status);
+            document.getElementById('new_tot').innerHTML = response.new_total;
+            document.getElementById('coupon_discounts').innerHTML = response.coupon_discount;
+            document.getElementById('new_price').value = response.new_total;
+            document.getElementById('coupon_code2').value = response.coupon_code;
+           
+            // $('.subtotal').load(location.href + " .subtotal");
+    
+          }
+        });
+      });
+    });
+    </script>
+    <!-- Coupon Apply End  -->
+</html>
+{% endblock  %}  
+
+

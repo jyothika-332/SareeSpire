@@ -29,4 +29,7 @@ urlpatterns = [
     path('',include('brand.urls')),
     path('',include('userprofile.urls')),
     path('',include('cart.urls')),
+    path('',include('checkout.urls')),
+    path('',include('wishlist.urls')), 
+    path('',include('order.urls')),
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

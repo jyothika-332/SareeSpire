@@ -271,7 +271,11 @@ def editcoupon(request,cpn_id):
         cpn.save()
         return redirect('admincoupon')
     
-    cpn = Coupon.objects.get(id=cpn_id)
+    try:
+        cpn = Coupon.objects.get(id=cpn_id)
+    except Coupon.DoesNotExist:
+        return redirect(admincoupon)
+    
     return render(request, 'checkout/editcoupon.html',{'cpn': cpn})
             
 

@@ -121,7 +121,11 @@ def editoffer(request,offer_id):
         messages.success(request, 'Offer updated successfully')
         offr.save()
         return redirect('adminoffer')
-    offr = Offer.objects.get(id=offer_id)
+    try:
+        offr = Offer.objects.get(id=offer_id)
+    except Offer.DoesNotExist:
+        return redirect(adminoffer)
+    
     return render(request, 'product/editoffer.html',{'offr': offr})
 
 

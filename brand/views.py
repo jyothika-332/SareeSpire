@@ -56,7 +56,12 @@ def editbrand(request,brnd_id):
         messages.success(request, 'Brand updated successfully')
         brnd.save()
         return redirect('adminbrand')
-    brnd = Brand.objects.get(id=brnd_id)
+    
+    try:
+        brnd = Brand.objects.get(id=brnd_id)
+    except Brand.DoesNotExist:
+        return redirect(adminbrand)
+    
     return render(request, 'brand/editbrand.html',{'brnd': brnd})
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)

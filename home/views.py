@@ -56,21 +56,25 @@ def add_ads(request):
 @login_required(login_url='login')
 def edit_ads(request,ads_id):
     if request.method =='POST':
-        ads = request.POST['ads']
+        ads_name = request.POST.get('ads')
         image = request.FILES.get('image')
-        if ads == '' or image == '':
+        if ads_name == '' or image == '':
             messages.error(request, "Fields can't be blank")
             return redirect('edit_ads', ads_id)
 
         ads = Ads.objects.get(id=ads_id)
-        ads.ad_name = ads
+        ads.ad_name = ads_name
         if image:
             ads.image = image
 
         messages.success(request, 'Ads updated successfully')
         ads.save()
         return redirect('admin_ads')
-    ads = Ads.objects.get(id=ads_id)
+    
+    try:
+        ads = Ads.objects.get(id=ads_id)
+    except Ads.DoesNotExist:
+        return redirect(admin_ads)
     
     return render(request, 'homepage/edit_ads.html',{'ads': ads})
 

@@ -12,7 +12,10 @@ from django.contrib import messages
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login')
 def cart(request):
-    cart = Cart.objects.get(users=request.user, is_paid=False)
+    try:
+        cart = Cart.objects.get(users=request.user, is_paid=False)
+    except Cart.DoesNotExist:
+        return render(request,'cart/cart.html')
     cart_items = CartItem.objects.filter(cart=cart)
     total_price = 0
     tax = 0
@@ -37,6 +40,7 @@ def cart(request):
         'single_product_total':single_product_total,
         'grand_total':grand_total,
         'tax' : tax,
+        'cart' :cart,
     }
     return render(request,'cart/cart.html',context)
 
@@ -57,7 +61,11 @@ def add_to_cart(request,id):
         cart_item.quantity += 1
         cart_item.save()
     else:
-        cart_item = CartItem.objects.create(cart=cart,product=product, color=color_variant)
+        if product.offer:
+            total = product.get_offer_price()
+        else:
+            total = product.price
+        cart_item = CartItem.objects.create(cart=cart,product=product, color=color_variant,price = total)
 
     return redirect('cart')
 

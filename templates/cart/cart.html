@@ -89,6 +89,9 @@
                 </div>
                 {% endfor %}
                 {%endif%}
+                {% if not cartitem %}
+                <h3 class="text-center pb-2 text-danger">Cart is Empty</h3>
+                {% else %}
                 <tbody class="align-middle">
                    
                     {% for item in cartitem %}
@@ -123,6 +126,7 @@
                     </tr>
                     {% endfor %}
                 </tbody>
+                {% endif %}
             </table>
         </div>
         <div class="col-lg-4">
@@ -151,7 +155,11 @@
                         <h5 class="font-weight-bold">Total</h5>
                         <h5 class="font-weight-bold"id="grand_total">{{grand_total}}</h5>
                     </div>
+                    {% if cartitem %}
                     <a href="{% url 'checkout' %}"><button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button></a>
+                    {% else %}
+                    <a href="{% url 'product' %}"><button class="btn btn-block btn-primary my-3 py-3">Continue Shopping</button></a>
+                    {% endif %}
                 </div>
             </div>
         </div>

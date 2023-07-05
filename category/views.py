@@ -69,5 +69,10 @@ def editcategory(request,cat_id):
         messages.success(request, 'category updated successfully')
         cat.save()
         return redirect('admincategory')
-    cat = Categories.objects.get(id=cat_id)
+    
+    try:
+        cat = Categories.objects.get(id=cat_id)
+    except Categories.DoesNotExist:
+        return redirect(admincategory)
+    
     return render(request, 'category/editcategory.html',{'cat': cat})

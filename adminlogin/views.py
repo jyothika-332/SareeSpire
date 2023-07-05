@@ -75,14 +75,14 @@ def adminproduct(request):
 @login_required(login_url='login')
 def addproduct(request):
     if request.method == 'POST':
-        prod_name = request.POST['product_name']
-        description = request.POST['description']
-        categories = request.POST['categories']
-        brand = request.POST['brand']
+        prod_name = request.POST.get('product_name')
+        description = request.POST.get('description')
+        categories = request.POST.get('categories')
+        brand = request.POST.get('brand')
         image = request.FILES.get('image')
-        price = request.POST['price']
+        price = request.POST.get('price')
         try:
-            is_super = request.POST['is_superuser']
+            is_super = request.POST.get('is_superuser')
         except: 
             is_super = False
 
@@ -117,20 +117,21 @@ def deleteproduct(request,prod_id):
 @login_required(login_url='login')
 def editproduct(request,prod_id):
     if request.method =='POST':
-        prod_name = request.POST['product_name']
-        description = request.POST['description']
-        brand = request.POST['brand']
-        categories = request.POST['categories']
+        prod_name = request.POST.get('product_name')
+        description = request.POST.get('description')
+        brand = request.POST.get('brand')
+        categories = request.POST.get('categories')
         image = request.FILES.get('image')
-        price = request.POST['price']
-        offer = request.POST['offer']
+        price = request.POST.get('price')
+        offer = request.POST.get('offer')
+
         if prod_name == '' or description == '' or categories == '' or price == '' or offer == '' or image == '':
             messages.error(request, "Fields can't be blank")
             return redirect('editproduct', prod_id)
         
-        brnd = Brand.objects.get(brand_name = brand)
-        cat = Categories.objects.get(product_name = categories)   
-        offr = Offer.objects.get(name = offer)
+        brnd = Brand.objects.get(id = brand)
+        cat = Categories.objects.get(id = categories)   
+        offr = Offer.objects.get(id = offer)
 
         prd = Product.objects.get(id=prod_id)
         prd.product_name = prod_name
@@ -145,7 +146,11 @@ def editproduct(request,prod_id):
         messages.success(request, 'Product updated successfully')
         prd.save()
         return redirect('adminproduct')
-    prd = Product.objects.get(id=prod_id)
+    
+    try:
+        prd = Product.objects.get(id=prod_id)
+    except Product.DoesNotExist:
+        return redirect(adminproduct)
     
     return render(request, 'adminlogin/editproduct.html',{'prd': prd,'cat' : Categories.objects.all(),'brand' : Brand.objects.all(),'offer' : Offer.objects.all()})           
 

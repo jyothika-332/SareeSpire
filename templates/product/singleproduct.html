@@ -5,6 +5,50 @@
 
 
 
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .img-zoom-container-img {
+        position: relative;
+    }
+
+    .img-zoom-container-div {
+        position: relative;
+        background-color: red;
+        top: 0;
+        left: 10;
+        z-index: 9999;
+    }
+
+
+    .img-zoom-lens:hover {
+        position: absolute;
+      
+        width: 200px;
+        height: 200px;
+    }
+
+    .img-zoom-lens {
+        position: absolute;
+       
+        width: 200px;
+        height: 200px;
+    }
+
+
+    .img-zoom-result {
+        position: absolute;
+        top: 0;
+        right: 10;
+        z-index: 9999;
+        border: 1px solid #d4d4d4;
+        
+        width: 300px;
+        height: 300px;
+    }
+  </style>
 
 <!-- Navbar Start -->
 <div class="container-fluid mb-5">
@@ -57,15 +101,16 @@
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner border">
                         <div class="carousel-item active">
-                            <img id="main_image" class="w-100 h-100" src="{{ single_product.image.url }}" alt="Image">
+                            <div class="item-slick3" data-thumb="{{ single_product.image.url }}">
+                                <div class="wrap-pic-w pos-relative img-zoom-container">
+                                  <img id="main_image" src="{{ single_product.image.url }}" alt="Image">
+                                  <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04" href="{{ single_product.image.url }}" onclick="imageZoom('main_image', 'myresult')">
+                                    <i class="fa fa-expand"></i>
+                                  </a>
+                                </div>
+                              </div>
                         </div>
                     </div>
-                    <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
-                        <i class="fa fa-2x fa-angle-left text-dark"></i>
-                    </a>
-                    <a class="carousel-control-next" href="#product-carousel" data-slide="next">
-                        <i class="fa fa-2x fa-angle-right text-dark"></i>
-                    </a>
                 </div>
             </div>
 
@@ -78,6 +123,7 @@
             {%endif%}
 
             <div class="col-lg-7 pb-5">
+                <div id="myresult" class="img-zoom-result"></div>
                 <h3 class="font-weight-semi-bold">{{ single_product.product_name }}</h3>
                 <div class="d-flex mb-3">
                     <div class="text-primary mr-2">
@@ -178,6 +224,7 @@
                         if(selected_color == color){
                             var image = document.getElementById('main_image').src = '{{variant.image.url}}';
                             select_variant_id = '{{variant.id}}'
+                            imageZoom('main_image', 'myresult');
                         }
 
                     {% endfor %}
@@ -207,6 +254,67 @@
             }
         }
 
-    </script>
+
+		imageZoom("main_image", "myresult");
+
+function imageZoom(imgID, resultID) {
+  var img, lens, result, cx, cy;
+  img = document.getElementById(imgID);
+  result = document.getElementById(resultID);
+  lens = document.createElement("DIV");
+  lens.setAttribute("class", "img-zoom-lens");
+  img.parentElement.insertBefore(lens, img);
+  cx = result.offsetWidth / lens.offsetWidth;
+  cy = result.offsetHeight / lens.offsetHeight;
+  result.style.backgroundImage = "url('" + img.src + "')";
+  result.style.backgroundSize = 720 + "px " + 904 + "px";
+//   result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
+console.log('Width ', img.width, ' Height ',img.height)
+  result.style.display = "none";
+  lens.style.display = "none";
+  lens.addEventListener("mousemove", showResult);
+  img.addEventListener("mousemove", showResult);
+  lens.addEventListener("touchmove", showResult);
+  img.addEventListener("touchmove", showResult);
+  lens.addEventListener("mouseout", hideResult);
+  img.addEventListener("mouseout", hideResult);
+
+  function showResult(e) {
+    var imgWidth = 720
+    var imgHeight = 904
+
+    lens.style.display = "block";
+    result.style.display = "block";
+    var pos, x, y;
+    e.preventDefault();
+    pos = getCursorPos(e);
+    x = pos.x - (lens.offsetWidth / 2);
+    y = pos.y - (lens.offsetHeight / 2);
+    if (x > imgWidth - lens.offsetWidth) {x = imgWidth - lens.offsetWidth;}
+    if (x < 0) {x = 0;}
+    if (y > imgHeight - lens.offsetHeight) {y = imgHeight - lens.offsetHeight;}
+    if (y < 0) {y = 0;}
+    lens.style.left = x + "px";
+    lens.style.top = y + "px";
+    result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
+  }
+
+  function hideResult(e) {
+    result.style.display = "none";
+  }
+
+  function getCursorPos(e) {
+    var a, x = 0, y = 0;
+    e = e || window.event;
+    a = img.getBoundingClientRect();
+    x = e.pageX - a.left;
+    y = e.pageY - a.top;
+    x = x - window.pageXOffset;
+    y = y - window.pageYOffset;
+    return { x: x, y: y };
+  }
+}
+
+	</script>
 
 {% endblock  %}

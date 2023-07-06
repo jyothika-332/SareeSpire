@@ -153,9 +153,10 @@ def edit_variation(request,var_id):
         vartn = ColorVariation.objects.get(id=var_id)
         vartn.product = prd
         vartn.description = description
-        vartn.color = color
         if image:
             vartn.image = image
+        vartn.color = color
+            
         messages.success(request, 'Product variation updated successfully')
         vartn.save()
         return redirect('admin_variation')

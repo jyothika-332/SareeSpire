@@ -76,7 +76,7 @@ class Product(models.Model):
 
 class ColorVariation(models.Model):
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
-    description = models.CharField(max_length=250)
+    description = models.TextField()
     color = models.CharField(max_length=30)
     quantity = models.IntegerField()
     image = models.ImageField(null=True, blank=True)

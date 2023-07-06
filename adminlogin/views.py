@@ -166,4 +166,3 @@ def block_user(request,user_id):
     return redirect('usertable') 
 
 
-

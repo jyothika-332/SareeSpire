@@ -7,8 +7,8 @@ from userprofile.models import UserAddress
 
 class Coupon(models.Model):
     coupon_code = models.CharField(max_length=50)
-    discount = models.BigIntegerField()
-    minimum_purchase = models.BigIntegerField()
+    discount = models.BigIntegerField(null=True)
+    minimum_purchase = models.BigIntegerField(null=True)
     is_active = models.BooleanField(default=False)
 
 class CouponUsed(models.Model):

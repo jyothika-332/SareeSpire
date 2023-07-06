@@ -40,7 +40,7 @@ class Brand(models.Model):
 
 class Offer(models.Model):
     name = models.CharField(max_length=30, unique=True)
-    discount = models.BigIntegerField()
+    discount = models.BigIntegerField(null=True)
     start_date = models.DateField()
     end_date = models.DateField()
 
@@ -78,7 +78,7 @@ class ColorVariation(models.Model):
     product = models.ForeignKey(Product,on_delete=models.CASCADE)
     description = models.TextField()
     color = models.CharField(max_length=30)
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(null=True)
     image = models.ImageField(null=True, blank=True)
 
     def __str__(self):

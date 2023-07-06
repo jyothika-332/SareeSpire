@@ -9,13 +9,13 @@ class UserAddress(models.Model):
     city = models.CharField(max_length=50,blank=False)
     state = models.CharField(max_length=50,blank=False)
     country = models.CharField(max_length=50,blank=False)
-    phone = models.BigIntegerField()
-    pincode = models.IntegerField()
+    phone = models.BigIntegerField(null=True)
+    pincode = models.IntegerField(null=True)
     is_active = models.BooleanField(default=True)
 
 class User_Otp(models.Model):
     user =  models.ForeignKey(User, on_delete=models.CASCADE)
-    otp = models.BigIntegerField()   
+    otp = models.BigIntegerField(null=True)   
 
 
         

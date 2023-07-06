@@ -22,7 +22,7 @@ class Order(models.Model):
 class Ordered_Product(models.Model):
     order_id = models.ForeignKey(Order,on_delete=models.CASCADE,blank=True,null=True)
     product = models.ForeignKey(ColorVariation,on_delete=models.CASCADE,blank=True,null=True)
-    quantity = models.BigIntegerField()
+    quantity = models.BigIntegerField(null=True)
     amount = models.DecimalField(max_digits=20,decimal_places=2)
     STATUS = (
         ('Order Confirmed','Order Confirmed'),

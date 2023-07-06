@@ -149,6 +149,7 @@ def edit_variation(request,var_id):
         if not image:
             messages.error(request, "Image not found")
             return redirect('edit_variation', var_id)
+        
         prd = Product.objects.get(id=product)
         vartn = ColorVariation.objects.get(id=var_id)
         vartn.product = prd

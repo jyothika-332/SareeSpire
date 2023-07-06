@@ -21,22 +21,26 @@
       <thead>
         <tr>
           <th scope="col">id</th>
-          <th scope="col">Category_Name</th>
+          <th scope="col">Product</th>
           <th scope="col">Description</th>
           <th scope="col">Image</th>
+          <th scope="col">Color</th>
+          <th scope="col">Quantity</th>
           <th scope="col"></th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
-        {% for i in cat %}
+        {% for i in var %}
         <tr>
           <th scope="row">{{i.id}}</th>
-          <td>{{i.product_name}}</td>
-          <td>{{i.description}}</td> 
+          <td>{{i.product}}</td>
+          <td>{{i.description}}</td>
           <td>{% if i.image %}<img src="{{i.image.url}}" alt="" width="50">{% endif %}</td>
-          <td><button><a href="{% url 'editcategory' i.id%}" class="btn btn-sm text-dark p-0 "><i class="fas fa-shopping-cart text-primary mr-1"></i>Edit</a></button></td>
-          <td><button><a href="{% url 'deletecategory' i.id %}" class="btn btn-sm text-dark p-0 "><i class="fas fa-shopping-cart text-primary mr-1"></i>Delete</a></button></td>
+          <td>{{i.color}}</td>
+          <td>{{i.quantity}}</td>
+          <td><button><a href="{% url 'edit_variation' i.id%}" class="btn btn-sm text-dark p-0 "><i class="fas fa-shopping-cart text-primary mr-1"></i>Edit</a></button></td>
+          <td><button><a href="{% url 'delete_variation' i.id %}" class="btn btn-sm text-dark p-0 "><i class="fas fa-shopping-cart text-primary mr-1"></i>Delete</a></button></td>
         </tr>
         {% endfor %}
        
@@ -44,7 +48,7 @@
     </table>
     <!-- End Table with stripped rows -->
 
-    <button><a href="{% url 'addcategory'%}" class="btn btn-sm text-dark p-0 "><i class="fas fa-shopping-cart text-primary mr-1"></i>Add Category</a></button>
+    <button><a href="{% url 'add_variation'%}" class="btn btn-sm text-dark p-0 "><i class="fas fa-shopping-cart text-primary mr-1"></i>Add Variation</a></button>
 
   </div>
 

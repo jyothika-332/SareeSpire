@@ -31,6 +31,7 @@
                 <div class="mb-2">
                     <label for="categories" class="form-label text-dark">Categories :</label>
                     <select name="categories" id="" class="form-control">
+                        <option value="" selected disabled>Select an option</option>
                         {% for category in cat  %}
                             <option value="{{ category.id }}">{{ category.product_name }}</option>
                         {% endfor %}    
@@ -39,9 +40,10 @@
                 <div class="mb-2">
                     <label for="brand" class="form-label text-dark">Brand :</label>
                     <select name="brand" id="" class="form-control">
-                    {% for brand in brand  %}
-                        <option value="{{ brand.id }}">{{ brand.brand_name }}</option>
-                    {% endfor %}
+                        <option value="" selected disabled>Select an option</option>
+                        {% for brand in brand  %}
+                            <option value="{{ brand.id }}">{{ brand.brand_name }}</option>
+                        {% endfor %}
                     </select> 
                 </div>
                 <div class="mb-2">
@@ -55,6 +57,7 @@
                 <div class="mb-2">
                     <label for="offer" class="form-label text-dark">Offer :</label>
                     <select name="offer" id="" class="form-control">
+                        <option value="" selected disabled>Select an option</option>
                         {% for offer in offer  %}
                             <option value="{{ offer.id }}">{{ offer.name }}</option>
                         {% endfor %}    

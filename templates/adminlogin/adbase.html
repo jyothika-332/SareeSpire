@@ -168,7 +168,7 @@
               </a>
             </li>
             <li>
-              <a href="{% url 'admin_ads' %}">
+              <a href="{% url 'add_ads' %}">
                 <i class="bi bi-circle"></i><span>Add Ads</span>
               </a>
             </li>
@@ -180,6 +180,90 @@
             <li>
               <a href="{% url 'admin_ads' %}">
                 <i class="bi bi-circle"></i><span>Delete Ads</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-gem"></i><span>Brand</span><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+              <a href="{% url 'adminbrand' %}">
+                <i class="bi bi-circle"></i><span> All Brand</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'addbrand' %}">
+                <i class="bi bi-circle"></i><span>Add Brand</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'adminbrand' %}">
+                <i class="bi bi-circle"></i><span>Edit Brand</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'adminbrand' %}">
+                <i class="bi bi-circle"></i><span>Delete Brand</span>
+              </a>
+            </li>
+          </ul>
+        </li><!-- End brand Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-bar-chart"></i><span>Category</span><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+              <a href="{% url 'admincategory' %}">
+                <i class="bi bi-circle"></i><span> All Category</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'addcategory' %}">
+                <i class="bi bi-circle"></i><span>Add Category</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'admincategory' %}">
+                <i class="bi bi-circle"></i><span>Edit Category</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'admincategory' %}">
+                <i class="bi bi-circle"></i><span>Delete Category</span>
+              </a>
+            </li>
+          </ul>
+        </li><!-- End category Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" data-bs-target="#variation-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-menu-button-wide"></i><span>Variations</span><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul id="variation-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+              <a href="{% url 'admin_variation' %}">
+                <i class="bi bi-circle"></i><span>All Variations</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'add_variation' %}">
+                <i class="bi bi-circle"></i><span>Add Variations</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'admin_variation' %}">
+                <i class="bi bi-circle"></i><span>Edit Variations</span>
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'admin_variation' %}">
+                <i class="bi bi-circle"></i><span>Delete Variations</span>
               </a>
             </li>
           </ul>
@@ -239,61 +323,6 @@
           </ul>
         </li><!-- End user Nav -->
   
-        <li class="nav-item">
-          <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-bar-chart"></i><span>Category</span><i class="bi bi-chevron-down ms-auto"></i>
-          </a>
-          <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li>
-              <a href="{% url 'admincategory' %}">
-                <i class="bi bi-circle"></i><span> All Category</span>
-              </a>
-            </li>
-            <li>
-              <a href="{% url 'addcategory' %}">
-                <i class="bi bi-circle"></i><span>Add Category</span>
-              </a>
-            </li>
-            <li>
-              <a href="{% url 'admincategory' %}">
-                <i class="bi bi-circle"></i><span>Edit Category</span>
-              </a>
-            </li>
-            <li>
-              <a href="{% url 'admincategory' %}">
-                <i class="bi bi-circle"></i><span>Delete Category</span>
-              </a>
-            </li>
-          </ul>
-        </li><!-- End category Nav -->
-  
-        <li class="nav-item">
-          <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-            <i class="bi bi-gem"></i><span>Brand</span><i class="bi bi-chevron-down ms-auto"></i>
-          </a>
-          <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li>
-              <a href="{% url 'adminbrand' %}">
-                <i class="bi bi-circle"></i><span> All Brand</span>
-              </a>
-            </li>
-            <li>
-              <a href="{% url 'addbrand' %}">
-                <i class="bi bi-circle"></i><span>Add Brand</span>
-              </a>
-            </li>
-            <li>
-              <a href="{% url 'adminbrand' %}">
-                <i class="bi bi-circle"></i><span>Edit Brand</span>
-              </a>
-            </li>
-            <li>
-              <a href="{% url 'adminbrand' %}">
-                <i class="bi bi-circle"></i><span>Delete Brand</span>
-              </a>
-            </li>
-          </ul>
-        </li><!-- End brand Nav -->
         <li class="nav-item">
           <a class="nav-link collapsed" data-bs-target="#coupon-nav" data-bs-toggle="collapse" href="#">
             <i class="bi bi-journal-text"></i><span>Coupon</span><i class="bi bi-chevron-down ms-auto"></i>

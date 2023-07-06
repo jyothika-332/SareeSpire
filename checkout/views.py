@@ -54,7 +54,6 @@ def place_order(request):
         selected_address = request.POST.get('address')
         new_price = request.POST.get('new_price')
         coupon_code2 = request.POST.get('coupon_code2')
-        print(selected_address,'daxoooooooooooooooooo')
         if not mode_of_payment:
             messages.error(request,'Please select a payment method..!!')
             return redirect('checkout')  
@@ -136,10 +135,6 @@ def checkout_add_address(request):
         phone = request.POST['phone']
         pincode = request.POST['pincode']
         
-        # try:
-        #     is_super = request.POST['is_superuser']
-        # except: 
-        #     is_super = False
 
         if house_name.strip() == '' or city.strip() == '' or state.strip() == '' or country.strip() == '' or phone.strip() == '' or pincode.strip() == '':
             messages.error(request, "Fields can't be blank")
@@ -189,10 +184,6 @@ def confirmation(request):
         return render(request,'confirmation.html',context)
 
     
-    
-    
-
-
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login')

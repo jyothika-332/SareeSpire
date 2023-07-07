@@ -69,14 +69,23 @@ def place_order(request):
         if ordered_products:
             amount = 0
             for i in ordered_products:
-                amount = amount + i.product.price * i.quantity
-                i.color.quantity = i.color.quantity - i.quantity
-                i.color.save()
+                if i.product.offer:
+                    amount = amount + i.product.get_offer_price() * i.quantity
+                    tax = amount * 0.18
+                    grand_total = amount + tax
+                    i.color.quantity = i.color.quantity - i.quantity
+                    i.color.save()
+                else:
+                    amount = amount + i.product.price * i.quantity
+                    tax = amount * 0.18
+                    grand_total = amount + tax
+                    i.color.quantity = i.color.quantity - i.quantity
+                    i.color.save()
 
             if new_price:
                 amount = new_price    
 
-            order = Order(customer = user, address=address, mode_of_payment=mode_of_payment, total_amount=amount)
+            order = Order(customer = user, address=address, mode_of_payment=mode_of_payment, total_amount=grand_total)
             order.save()
 
             if new_price:
@@ -158,7 +167,7 @@ def confirmation(request):
         mode_of_payment = request.POST.get('payment')
         selected_address = request.POST.get('address')
         if selected_address:
-                address = UserAddress.objects.get(id=selected_address)
+            address = UserAddress.objects.get(id=selected_address)
 
         ordered_products = CartItem.objects.filter(cart__users = request.user)
         if ordered_products:

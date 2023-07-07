@@ -92,7 +92,11 @@
                     <tr>
                         <td class="align-middle">{{ item.order_id.id}}</td>
                         <td class="align-middle">{{ item.product.product.product_name }}</td>
+                        {% if item.product.product.offer %}
+                        <td class="align-middle">{{ item.product.product.get_offer_price }}</td>
+                        {% else %}
                         <td class="align-middle">{{ item.product.product.price }}</td>
+                        {% endif %}
                         <td class="align-middle">{{ item.quantity }}</td>
                         <td class="align-middle">{{ item.order_id.order_date }}</td>
                         <td class="align-middle">{{ item.status }}</td>

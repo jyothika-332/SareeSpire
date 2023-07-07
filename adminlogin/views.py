@@ -11,6 +11,9 @@ from django.db.models import Sum
 from django.db.models.functions import TruncDay
 from django.db.models.functions import Cast
 from django.db.models import DateField
+from openpyxl import Workbook
+import io
+
 
 # Create your views here.
 
@@ -52,8 +55,105 @@ def dashboard(request):
 
 
 
+def report(request):
+    
+    context = {}
+    if request.method == 'POST':
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        
+       
+        
+        if start_date == '' or end_date == '':
+            messages.error(request, 'Give date first')
+            return redirect('report')
+            
+        if start_date == end_date:
+            date_obj = datetime.strptime(start_date, '%Y-%m-%d')
+            order_items = Order.objects.filter(total_amount__gt=0,order_date=date_obj.date())
+            if order_items:
+                context.update(sales=order_items, s_date=start_date, e_date=end_date)
+                return render(request, 'adminlogin/salesreport.html', context)
+            else:
+                messages.error(request, 'No data found')
+            return redirect('report')
 
-    # return render(request,'adminlogin/dashboard.html')
+        order_items = Order.objects.filter(total_amount__gt=0,order_date__gte=start_date, order_date__lte=end_date)
+        total_revenue = order_items.aggregate(total_revenue=Sum('total_amount'))['total_revenue']
+        
+        if order_items:
+            context.update(sales = order_items, s_date = start_date, e_date = end_date, total_revenue = total_revenue)
+            
+        else:
+            messages.error(request, 'No data found')
+
+    return render(request,'adminlogin/salesreport.html',context)
+
+
+
+# EXCEL Sales Report 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='login')
+def sales_report_excel(request):  
+    context = {} 
+    if request.method == 'POST': 
+        start_date = request.POST.get('Es_date') 
+        end_date = request.POST.get('Ee_date') 
+        
+        if start_date == '' or end_date == '': 
+            messages.error(request, 'Give date first') 
+            return redirect('report')
+        if start_date == end_date: 
+            date_obj = datetime.strptime(start_date, '%Y-%m-%d') 
+            order_items = Order.objects.filter(total_amount__gt=0,order_date=date_obj.date()) 
+            if order_items: 
+                context.update(sales=order_items, s_date=start_date, e_date=end_date) 
+                return render(request, 'adminlogin/salesreport.html', context) 
+            else: 
+                messages.error(request, 'No data found') 
+            return redirect('report') 
+        order_items = Order.objects.filter(total_amount__gt=0,order_date__gte=start_date, order_date__lte=end_date) 
+        total_revenue = order_items.aggregate(total_revenue=Sum('total_amount'))['total_revenue'] 
+        if order_items: 
+            context.update(sales = order_items,s_date = start_date, e_date = end_date, total_revenue = total_revenue)
+
+            # EXCEL WORKS 
+            sales_data = context 
+
+            workbook = Workbook() 
+            sheet=workbook.active 
+            sheet.title='SalesData' 
+                
+            sheet['A1']='Order_Id' 
+            sheet['B1']='time_of_order' 
+            sheet['C1']='mode_of_payment' 
+            sheet['D1']='total_amount' 
+            
+                
+            row_num=4 
+            for order in sales_data['sales']: 
+                sheet[f'A{row_num}']=order.id 
+                sheet[f'B{row_num}']=order.order_date.replace(tzinfo=None).strftime('%Y-%m-%d%H:%M:%S') 
+                sheet[f'C{row_num}']=order.mode_of_payment 
+                sheet[f'D{row_num}']=order.total_amount 
+                row_num+=1 
+                
+            excel_file=io.BytesIO() 
+            workbook.save(excel_file) 
+            excel_file.seek(0) 
+                
+            response=HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') 
+            response['Content-Disposition']='attachment;filename="sales_data.xlsx"' 
+            response['Content-Transfer-Encoding']='binary' 
+            response.write(excel_file.read()) 
+                
+            return response 
+        else: 
+            messages.error(request,'No data found') 
+    return render(request,'adminlogin/salesreport.html',context)
+
+
+
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login')
@@ -112,6 +212,7 @@ def deleteproduct(request,prod_id):
     prod.delete()
     messages.success(request,'Product Deleted successfully')
     return redirect('adminproduct')
+
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url='login')

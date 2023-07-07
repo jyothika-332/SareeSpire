@@ -1,0 +1,94 @@
+{% extends "adminlogin/adbase.html" %}
+{% load static %}
+{% block title %}SareeSpire{% endblock  %}
+{% block body %}
+
+
+<main id="main" class="main">
+  <div class="card-body">
+    
+    {% if messages %}
+    {% for message in messages %}
+    <div class="text-center text-danger pt-3">
+        <strong>{{message}}</strong>
+    </div>
+    {% endfor %}
+    {%endif%}    
+
+
+    <div class="mb-2 col-4 d-flex">
+        <div class="mx-3" >
+            <form action="{% url 'report' %}" method="POST">
+                {% csrf_token %}
+                <label for="" class="form-label text-dark">Start Date : </label>
+                <input type="date" name="start_date" id="" class="form-control bg-transparent text-dark" style="width: 150px;">
+        </div>
+        <div class="mx-5 mb-5">
+            <label for="" class="form-label text-dark">End Date : </label>
+            <input type="date" name="end_date" id="" class="form-control bg-transparent text-dark" style="width: 150px;">
+        </div>
+        <div class="mx-5 mb-4" style="margin-top: 25px;">
+            <button class="btn btn-secondary" href="" type="submit" style="width: 150px; height: 50px;">Generate</button>
+        </form>
+        </div>
+        <div class="mb-4" style="margin-top: 25px;">
+            <form action="{% url 'sales_report_excel' %}" method="POST">
+                {% csrf_token %}
+                <input type="date" value="{{ s_date }}" name="Es_date" hidden>
+                <input type="date" value="{{ e_date }}" name="Ee_date" hidden>       
+                <button class="btn btn-primary" href="{% url 'sales_report_excel' %}" type="submit" style="width: 200px; height: 50px;">Download Excel</button>
+            </form>
+        </div>
+    </div>
+
+    
+
+    <!-- Table with stripped rows -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Order_id</th>
+          <th scope="col">Date</th>
+          <th scope="col">Payment Mode</th>
+          <th scope="col">Sales Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in sales %}
+        <tr>
+          <th scope="row">{{i.id}}</th>
+          <td>{{i.order_date}}</td>
+          <td>{{i.mode_of_payment}}</td>
+          <td>{{i.total_amount}}</td>
+        </tr>
+        {% endfor %}
+       
+      </tbody>
+    </table>
+    <!-- End Table with stripped rows -->
+
+    {% comment %} <div class="col-lg-4">
+        <div class="card border-secondary mb-5">
+            <div class="card-body">
+                <div class="d-flex justify-content-between mb-3 pt-1">
+                    <h6 class="font-weight-medium">Subtotal</h6>
+                    <h6 class="font-weight-medium"id="sub_total">{{total_price}}</h6>
+                </div>
+            </div>
+        </div>
+    </div> {% endcomment %}
+
+
+    <div class="mb-2 col-4 d-flex">
+        <div class="mx-3" >
+            <label for="" class="form-label text-dark">Total Revenue : </label>
+            <input type="text" name="product_name" id="" class="form-control bg-transparent text-dark" >
+        </div>
+    </div>
+
+  </div>
+
+</main><!-- End #main -->  
+
+
+{% endblock %}  

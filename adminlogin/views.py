@@ -55,8 +55,9 @@ def dashboard(request):
 
 
 
-def report(request):
-    
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='login')
+def report(request):   
     context = {}
     if request.method == 'POST':
         start_date = request.POST.get('start_date')

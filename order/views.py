@@ -12,7 +12,7 @@ from django.http import HttpResponseRedirect
 @login_required(login_url='login')
 def mainorderpage(request):
     context={
-        'orders': Order.objects.filter(customer=request.user)
+        'orders': Order.objects.filter(customer=request.user).order_by('-id')
     }
     return render(request,'orders/mainorder.html',context)
 
@@ -22,7 +22,7 @@ def mainorderpage(request):
 @login_required(login_url='login')
 def order(request,order_item_id):
     context={
-        'orders': Ordered_Product.objects.filter(order_id__id=order_item_id)
+        'orders': Ordered_Product.objects.filter(order_id__id=order_item_id).order_by('-id')
     }
     return render(request,'orders/orders.html',context)
 
@@ -31,9 +31,20 @@ def order(request,order_item_id):
 @login_required(login_url='login')
 def adminorder(request):
     context={
-        'orders': Order.objects.all()
+        'orders': Order.objects.all().order_by('-id')
     }
     return render(request,'orders/adminorders.html',context)
+
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+@login_required(login_url='login')
+def adminsingleorder(request,order_item_id):
+    context={
+        'orders': Ordered_Product.objects.filter(order_id=order_item_id).order_by('-id')
+    }
+    return render(request,'orders/adminsingleorder.html',context)
+
 
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -72,14 +83,6 @@ def cancel_order(request,order_item_id):
         messages.error(request,'Amount Refunded to your Wallet..!!')
    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))    
 
-
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-@login_required(login_url='login')
-def adminsingleorder(request,order_item_id):
-    context={
-        'orders': Ordered_Product.objects.filter(order_id=order_item_id)
-    }
-    return render(request,'orders/adminsingleorder.html',context)
 
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)

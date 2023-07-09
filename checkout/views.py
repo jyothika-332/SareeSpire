@@ -175,14 +175,18 @@ def confirmation(request):
             for i in ordered_products:
                 if i.product.offer:
                     amount = amount + i.product.get_offer_price() * i.quantity
+                    tax = amount * 0.18
+                    grand_total = amount + tax
                     i.color.quantity = i.color.quantity - i.quantity
                     i.color.save()
                 else:
                     amount = amount + i.product.price * i.quantity
+                    tax = amount * 0.18
+                    grand_total = amount + tax
                     i.color.quantity = i.color.quantity - i.quantity
                     i.color.save()
 
-        order = Order(customer = user, address=address, mode_of_payment=mode_of_payment, total_amount=amount)
+        order = Order(customer = user, address=address, mode_of_payment=mode_of_payment, total_amount=grand_total)
         order.save()
         context = {
             "order":order, 
